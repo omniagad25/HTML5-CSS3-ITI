@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <style>
+      #map {
+        height: 400px;
+        width: 50%;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: fit-content;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .button-container {
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        background-color: #4caf50;
+        border-radius: 10px;
+        border: 1px solid green;
+        color: white;
+        width: 127px;
+        padding: 5px;
+        cursor: pointer;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+      }
+      table th {
+        background-color: #4caf50;
+        color: white;
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+      }
+      #map-info {
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg", v: "weekly"});</script>
+    <script src="Map.js"></script>
+    <button id="map-btn">Show Map</button>
+    <button id="info-btn">Get Location Info</button>
+    <div id="map"></div>
+    <div id="map-info"></div>
+ 
+    <script>
+      class LocationHandler {
+        constructor() {
+          this.map = null;
+          this.mapSuccess = false;
+          this.lat = null;
+          this.lon = null;
+        }
+
+        async initMap(x, y) {
+          const { Map } = await google.maps.importLibrary("maps");
+
+          this.map = new Map(document.getElementById("map"), {
+            center: { lat: x, lng: y },
+            zoom: 8,
+          });
+        }
+
+        showMap() {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              this.lat = position.coords.latitude;
+              this.lon = position.coords.longitude;
+              this.initMap(this.lat, this.lon);
+              this.mapSuccess = true;
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+              this.mapSuccess = false;
+            }
+          );
+        }
+
+        getLocationInfo() {
+          if (this.mapSuccess) {
+            document.getElementById("map-info").innerHTML = `
+              <table>
+                <tr>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Time</th>
+                </tr>
+                <tr>
+                  <td>${this.lat}</td>
+                  <td>${this.lon}</td>
+                  <td>${new Date()}</td>
+                </tr>
+              </table>`;
+          } else {
+            document.getElementById("map-info").innerHTML = "There is no map to get the location information.";
+          }
+        }
+
+        requestLocationPermission() {
+          const permissionGranted = window.confirm("Do you want to allow access to your location?");
+          if (permissionGranted) {
+            this.showMap();
+          } else {
+            alert("Location permission denied. Please enable location services.");
+          }
+        }
+      }
+
+      const locationHandler = new LocationHandler();
+
+      document.getElementById("map-btn").addEventListener("click", () => {
+        locationHandler.requestLocationPermission();
+      });
+
+      document.getElementById("info-btn").addEventListener("click", () => {
+        locationHandler.getLocationInfo();
+      });
+    </script>
+  </body>
+</html>
