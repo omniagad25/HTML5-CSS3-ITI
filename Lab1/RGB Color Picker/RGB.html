@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Picker in RGB</title>
+  <style>
+    body{
+      text-align: center;
+    }
+    label {
+        display: block;
+        margin: 8px 15px;
+    }
+
+    #colorText {
+        font-size: 40px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+  <label for="redRange">Red</label>
+    <input type="range" id="redRange" min="0" max="255" value="0" step="1" onchange="updateColor()">
+    
+    <label for="greenRange">Green</label>
+    <input type="range" id="greenRange" min="0" max="255" value="0" step="1" onchange="updateColor()">
+    
+    <label for="blueRange">Blue</label>
+    <input type="range" id="blueRange" min="0" max="255" value="0" step="1" onchange="updateColor()">
+
+    <div id="colorText">This is the output color</div>
+
+    <script>
+        function updateColor() {
+
+            var redValue = document.getElementById('redRange').value;
+            var greenValue = document.getElementById('greenRange').value;
+            var blueValue = document.getElementById('blueRange').value;
+
+            // Update the color of the text element
+            var colorText = document.getElementById('colorText');
+            colorText.style.color = 'rgb(' + redValue + ',' + greenValue + ',' + blueValue + ')';
+        }
+    </script>
+</body>
+</html>

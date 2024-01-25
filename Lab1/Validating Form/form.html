@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="form.css">
+    <title>Form Validation</title>
+</head>
+<body>
+    <form>
+        <label for="username">Username</label>
+        <input type="text"  placeholder="Enter your username" pattern="[a-zA-Z0-9_]{2,8}" oninvalid="this.setCustomValidity('Username must be between 2 to 8 characters and can only contain letters or numbers or _.')"  required/>
+        <br>
+        <label for="email">Email</label>
+        <input type="email"  placeholder="Enter your email" pattern="[a-zA-Z0-9]{5}@(gmail|yahoo).com" required oninvalid="this.setCustomValidity('Email must be like name@example.com')"/>
+        <br>
+        <input type="submit" class="submit-btn" value="Submit">
+    </form>
+</body>
+</html>

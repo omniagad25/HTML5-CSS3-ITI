@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="MediaPlayer.css">
+    <title>Media Player</title>
+</head>
+<body>
+    <div id="player-container">
+        <img id="media-image" src="https://i.ytimg.com/vi/3txlpt1ku2o/maxresdefault.jpg" alt="Media Image">
+        <audio id="myAudio" controls onloadedmetadata="initializeAudio()">
+            <source  id="source"src="" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="additional-container">
+            <button id="play" class="additional" onclick="Play()">Play</button>
+            <button class="additional" onclick="Pause()">Pause</button>
+            <button class="additional" onclick="Stop()">Stop</button>
+            <button class="additional" onclick="Mute()">Mute</button>
+        </div>
+        <span>
+            <label for="volume">Volume</label>
+            <input type="range" id="volume" name="volume" value="100" onchange="changeVolume()" min="0" max="100" step="1">
+        </span>
+        <span>
+            <label for="duration">Duration</label>
+            <input type="range" id="range" name="range" min="0" value="0" step="0.01" oninput="audio.currentTime = this.value">
+        </span>
+        <span>
+            <label for="speed">Speed</label>
+            <input type="range" id="speed" value="1" onchange="changeSpeed()" min="0.5" max="2" step="0.1">
+        </span>
+
+        <button  onclick="play1()">Zaza & Gargeer</button>
+        <button onclick="play2()">Sno7y</button>
+        <button onclick="play3()">Remi</button>
+        <button onclick="play4()">ِAhd Al-Asdqaa</button>
+        
+    </div>
+
+    <script src="MediaPlayer.js"></script>
+
+</body>
+</html>
